@@ -1,6 +1,8 @@
 import { createStore } from 'redux';
 
 // Action Generators - functions taht return action objects
+// ACTIONS: describe the fact thea something happened, but doesn't spscigy the state changes in response
+// REDUCERS: determins what do do (change the state) based on the action
 
 // const incrementCount = () => {
 //     return {
@@ -41,7 +43,11 @@ const setCount = ( { count } = {} ) => ({
     count
 })
 
-const store = createStore((state = { count: 0 }, action) => {
+// Reducers 
+// 1. Reducers are pure function (output is only determined by the input; does not change anything outside itself)
+// 2. Never change state or action .. can return an object that represents the new state
+
+const countReducer = (state = { count: 0 }, action) => {
     switch (action.type) {
         case 'INCREMENT':
             return {
@@ -62,7 +68,9 @@ const store = createStore((state = { count: 0 }, action) => {
         default:
             return state;
     }
-});
+};
+
+const store = createStore(countReducer);
 
 // watch for changes in the store
 
