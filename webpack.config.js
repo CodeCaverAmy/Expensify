@@ -25,7 +25,8 @@ module.exports = {
     // source map for WebPack to help with debugging
     devtool: 'cheap-module-eval-source-map',
     devServer: {
-        contentBase: path.join(__dirname, 'public')
+        contentBase: path.join(__dirname, 'public'),
+        historyApiFallback: true //tell dev server that we will handle routing on client-sidte
     }
 };
 
