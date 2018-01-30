@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-    BrowserRouter, Route, Switch
+    BrowserRouter, Route, Switch,
+    Link // adds client-side routing
 } from 'react-router-dom';
 
 import 'normalize.css/normalize.css';
@@ -33,19 +34,32 @@ const HelpPage = () => (
 
 const NotFoundPage = () => (
     <div>
-        404!
+        404 - <Link to='/'>Go Home</Link>
     </div>
 ); 
 
+const Header = () => (
+    <header>
+        <h1>Expensify</h1>
+        <Link to='/'>Dashboard</Link>
+        <Link to='/create'>Add Expense</Link>
+        <Link to='/edit'>Edit Expense</Link>
+        <Link to='/help'>Help</Link>
+    </header>
+);
+
 const routes = (
     <BrowserRouter>
-        <Switch>
-            <Route path='/' exact={true} component={ExpenseDashboardPage} />
-            <Route path='/create' component={AddExpensePage} />
-            <Route path='/edit' component={EditExpensePage} />
-            <Route path='/help' component={HelpPage} />
-            <Route component={NotFoundPage} />
-        </Switch>
+        <div>
+            <Header />
+            <Switch>
+                <Route path='/' exact={true} component={ExpenseDashboardPage} />
+                <Route path='/create' component={AddExpensePage} />
+                <Route path='/edit' component={EditExpensePage} />
+                <Route path='/help' component={HelpPage} />
+                <Route component={NotFoundPage} />
+            </Switch>
+        </div>
     </BrowserRouter>
 );
 
