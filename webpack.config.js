@@ -1,7 +1,7 @@
 const path = require('path'); // built in node function
 
 module.exports = {
-    entry: './src/playground/hoc.js', // tell webpack where to start
+    entry: './src/app.js', // tell webpack where to start
     output: {
         path: path.join(__dirname, 'public'), // absolute path on machine to where it lives
         filename: 'bundle.js'
