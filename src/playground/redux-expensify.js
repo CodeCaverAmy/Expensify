@@ -7,7 +7,7 @@ const addExpense = (
     { 
         description = '', 
         note = '',
-        account = 0, 
+        amount = 0, 
         createdAt = 0
     } = {} 
 ) => ({
@@ -16,7 +16,7 @@ const addExpense = (
         id: uuid(),
         description,
         note,
-        account,
+        amount,
         createdAt
     }
 });
@@ -28,7 +28,19 @@ const removeExpense = ( { id } = {} ) => ({
 });
 
 // EDIT_EXPENSE
+// needs two arguments: id and updates
+const editExpense = (id, updates) => ({
+    type: 'EDIT_EXPENSE',
+    id,
+    updates
+});
+
 // SET_TEXT_FILTER
+const setTextFilter = (text = '') => ({ // pass in the text value, if none sent in - set text to an empty string
+    type: 'SET_TEXT_FILTER',
+    text
+});
+
 // SORT_BY_DATE
 // SET_START_DATE
 // SET_END_DATE
@@ -44,7 +56,21 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
             ];
     case 'REMOVE_EXPENSE':
       return state.filter(({ id }) => id !== action.id);
-        default:
+    case 'EDIT_EXPENSE':
+        // go through every expense in the array to find the match .. when we find the match, correctly change the match
+        return state.map((expense) => { // pass into state.map( ... ) the updater function for the expense
+            if (expense.id === action.id) { 
+                // if the current expense id we are iterating over with map = the expensie id we are trying to edit
+                // return a brand new object (using the object spread operator .. grab all the existing properties)
+                return { // return a new object, changing this particular expense
+                    ...expense, // grab all of the properties on the existing expense
+                    ...action.updates // override any that were passed down
+                }
+            } else {
+                return expense;
+            }
+        })
+    default:
             return state;
     }
 };
@@ -58,6 +84,12 @@ const filtersReducersDefaultState = {
 };
 const filtersReducer = (state = filtersReducersDefaultState, action) => {
     switch (action.type) {
+        case 'SET_TEXT_FILTER':
+            // return a new object, getting all of the current values for state (current filter object) 
+            return {
+                ...state,
+                text: action.text // override text, setting it to the text passed in
+            };
         default: 
             return state;
     }
@@ -80,6 +112,16 @@ const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 30
 
 store.dispatch(removeExpense({ id: expenseOne.expense.id }));
 
+// Edit an expense(description, note, amount) ... passing in two things .. 
+// 1) id: expenseTwo.expense.id
+// 2) what to udate
+store.dispatch(editExpense(expenseTwo.expense.id, { amount: 500 }))
+
+// Set Text Filter 
+// pass text filter
+store.dispatch(setTextFilter('rent')); // return expenses who have rent in either description or note field
+store.dispatch(setTextFilter()); // return text value to an empty string
+
 const demoState = {
     expenses: [{
         id: '23',
@@ -95,16 +137,3 @@ const demoState = {
         endDate: undefined
     }
 };
-
-
-
-const user = {
-    name: 'Jen',
-    age: 25
-};
-
-// spread operator for objects (customize Babel configuration)
-console.log({
-    ...user,
-    location: 'Milwaukee'
-})
