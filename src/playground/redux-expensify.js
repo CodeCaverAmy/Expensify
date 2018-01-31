@@ -41,9 +41,29 @@ const setTextFilter = (text = '') => ({ // pass in the text value, if none sent 
     text
 });
 
+// SORT_BY_AMOUNT
+const sortByAmount = (sortBy = 'amount') => ({
+    type: 'SET_SORT_BY',
+    sortBy
+});
+
 // SORT_BY_DATE
+const sortByDate = (sortBy = 'date') => ({
+    type: 'SET_SORT_BY',
+    sortBy
+});
+
 // SET_START_DATE
+const setStartDate = (startDate) => ({
+    type: 'SET_START_DATE',
+    startDate
+});
+
 // SET_END_DATE
+const setEndDate = (endDate) => ({
+    type: 'SET_END_DATE',
+    endDate
+});
 
 // Expenses Reducer
 const expensesReducerDefaultState = [];
@@ -78,7 +98,7 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
 // Filters Reducer
 const filtersReducersDefaultState = {
     text: '',
-    sortBuy: 'date',
+    sortBy: 'date',
     startDate: undefined,
     endDate: undefined
 };
@@ -89,6 +109,24 @@ const filtersReducer = (state = filtersReducersDefaultState, action) => {
             return {
                 ...state,
                 text: action.text // override text, setting it to the text passed in
+            };
+        case 'SET_SORT_BY':
+            // return a new object, getting all of the current values for state (filter object) and set sortBy
+            return {
+                ...state,
+                sortBy: action.sortBy
+            };
+        case 'SET_START_DATE':
+            // return a new object, getting all of the current values for state, and set start Date
+            return {
+                ...state,
+                startDate: action.startDate
+            };
+        case 'SET_END_DATE':
+            // return a new object, getting all of the current values for state, and set start Date
+            return {
+                ...state,
+                endDate: action.endDate
             };
         default: 
             return state;
@@ -121,6 +159,15 @@ store.dispatch(editExpense(expenseTwo.expense.id, { amount: 500 }))
 // pass text filter
 store.dispatch(setTextFilter('rent')); // return expenses who have rent in either description or note field
 store.dispatch(setTextFilter()); // return text value to an empty string
+
+// Sort By ....
+store.dispatch(sortByAmount()); // set sortBy: 'amount'
+store.dispatch(sortByDate()); // set sortBy: 'date'
+
+// Set Start and End Date
+store.dispatch(setStartDate(125)); // set startDate: 125
+store.dispatch(setStartDate()); // set startDate to undefined
+store.dispatch(setEndDate(1240)); // set endDate: 1240
 
 const demoState = {
     expenses: [{
