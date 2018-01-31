@@ -1,18 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux'; // import named export connect, connecting our component to the Redux store
+import ExpenseListItem from './ExpenseListItem';
+import SelectExpenses from '../selectors/expenses';
 
 const ExpenseList = (props) => (
     <div>
         <h1>Expense List</h1>
-        {props.filters.text}
-        {props.expenses.length}
+        {props.expenses.map((expense) => { // pass in updater function
+            return <ExpenseListItem key={expense.id} {...expense} />
+        })}
     </div>
 );
 
 const mapStateToProps = (state) => {
     return {
-        expenses: state.expenses,
-        filters: state.filters
+        expenses: SelectExpenses(state.expenses, state.filters)
     };
 }
 
