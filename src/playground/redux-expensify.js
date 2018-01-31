@@ -35,35 +35,35 @@ import uuid from 'uuid'; // create universail identifiers
 //     updates
 // });
 
-// SET_TEXT_FILTER
-const setTextFilter = (text = '') => ({ // pass in the text value, if none sent in - set text to an empty string
-    type: 'SET_TEXT_FILTER',
-    text
-});
+// // SET_TEXT_FILTER
+// const setTextFilter = (text = '') => ({ // pass in the text value, if none sent in - set text to an empty string
+//     type: 'SET_TEXT_FILTER',
+//     text
+// });
 
-// SORT_BY_AMOUNT
-const sortByAmount = (sortBy = 'amount') => ({
-    type: 'SET_SORT_BY',
-    sortBy
-});
+// // SORT_BY_AMOUNT
+// const sortByAmount = (sortBy = 'amount') => ({
+//     type: 'SET_SORT_BY',
+//     sortBy
+// });
 
-// SORT_BY_DATE
-const sortByDate = (sortBy = 'date') => ({
-    type: 'SET_SORT_BY',
-    sortBy
-});
+// // SORT_BY_DATE
+// const sortByDate = (sortBy = 'date') => ({
+//     type: 'SET_SORT_BY',
+//     sortBy
+// });
 
-// SET_START_DATE
-const setStartDate = (startDate) => ({
-    type: 'SET_START_DATE',
-    startDate
-});
+// // SET_START_DATE
+// const setStartDate = (startDate) => ({
+//     type: 'SET_START_DATE',
+//     startDate
+// });
 
-// SET_END_DATE
-const setEndDate = (endDate) => ({
-    type: 'SET_END_DATE',
-    endDate
-});
+// // SET_END_DATE
+// const setEndDate = (endDate) => ({
+//     type: 'SET_END_DATE',
+//     endDate
+// });
 
 // Expenses Reducer
 const expensesReducerDefaultState = [];
