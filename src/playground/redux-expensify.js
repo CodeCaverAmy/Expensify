@@ -1,39 +1,39 @@
 import { createStore, combineReducers } from 'redux';
 import uuid from 'uuid'; // create universail identifiers
 
-// ADD_EXPENSE
-// ( {} = {} ) 'destructure the values  {} setting its defaults, and if it doesn't exist, pass in an empthy object {}
-const addExpense = ( 
-    { 
-        description = '', 
-        note = '',
-        amount = 0, 
-        createdAt = 0
-    } = {} 
-) => ({
-    type: 'ADD_EXPENSE',
-    expense: {
-        id: uuid(),
-        description,
-        note,
-        amount,
-        createdAt
-    }
-});
+// // ADD_EXPENSE
+// // ( {} = {} ) 'destructure the values  {} setting its defaults, and if it doesn't exist, pass in an empthy object {}
+// const addExpense = ( 
+//     { 
+//         description = '', 
+//         note = '',
+//         amount = 0, 
+//         createdAt = 0
+//     } = {} 
+// ) => ({
+//     type: 'ADD_EXPENSE',
+//     expense: {
+//         id: uuid(),
+//         description,
+//         note,
+//         amount,
+//         createdAt
+//     }
+// });
 
-// REMOVE_EXPENSE
-const removeExpense = ( { id } = {} ) => ({
-    type: 'REMOVE_EXPENSE',
-    id
-});
+// // REMOVE_EXPENSE
+// const removeExpense = ( { id } = {} ) => ({
+//     type: 'REMOVE_EXPENSE',
+//     id
+// });
 
-// EDIT_EXPENSE
-// needs two arguments: id and updates
-const editExpense = (id, updates) => ({
-    type: 'EDIT_EXPENSE',
-    id,
-    updates
-});
+// // EDIT_EXPENSE
+// // needs two arguments: id and updates
+// const editExpense = (id, updates) => ({
+//     type: 'EDIT_EXPENSE',
+//     id,
+//     updates
+// });
 
 // SET_TEXT_FILTER
 const setTextFilter = (text = '') => ({ // pass in the text value, if none sent in - set text to an empty string
