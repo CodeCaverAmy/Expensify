@@ -144,9 +144,14 @@ const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
         const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
 
         // figure out if expenses.description has the text vriable string inside of it
-
         return startDateMatch && endDateMatch && textMatch; // will return true if all are true .. item will be kept in array, else it will be removed
-    });
+    }).sort((a, b) => { // sort() accepts a function which will return
+        if (sortBy === 'date') {
+            return a.createdAt < b.createdAt ? 1 : -1; // 1: b comes first, -1: a comes first
+        } else if (sortBy === 'amount') {
+            return a.amount < b.amount ? 1 : -1;
+        }
+    })
 }
 
 // Store Creation using combineReducers
@@ -163,8 +168,9 @@ store.subscribe(() => {
     console.log(visibleExpenses);
 });
 
-const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100, createdAt: 1000 }));
-const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 300, createdAt: -1000 }));
+const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100, createdAt: -21000 }));
+const expenseTwo = store.dispatch(addExpense({ description: 'Rent', amount: 700, createdAt: -21000 }));
+const expenseThree = store.dispatch(addExpense({ description: 'Coffee', amount: 300, createdAt: -100 }));
 
 // store.dispatch(removeExpense({ id: expenseOne.expense.id }));
 
@@ -176,14 +182,14 @@ const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 30
 // Set Text Filter 
 // pass text filter
 // store.dispatch(setTextFilter('rent')); // return expenses who have rent in either description or note field
-// store.dispatch(setTextFilter()); // return text value to an empty string
+store.dispatch(setTextFilter()); // return text value to an empty string
 
 // Sort By ....
-// store.dispatch(sortByAmount()); // set sortBy: 'amount'
-// store.dispatch(sortByDate()); // set sortBy: 'date'
+store.dispatch(sortByDate()); // set sortBy: 'date'
+store.dispatch(sortByAmount()); // set sortBy: 'amount'
 
 // Set Start and End Date
-store.dispatch(setStartDate(125)); // set startDate: 125
+// store.dispatch(setStartDate(125)); // set startDate: 125
 // store.dispatch(setStartDate()); // set startDate to undefined
 // store.dispatch(setEndDate(1240)); // set endDate: 1240
 
