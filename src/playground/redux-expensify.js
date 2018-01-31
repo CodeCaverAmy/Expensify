@@ -1,6 +1,13 @@
 import { createStore, combineReducers } from 'redux';
 
 // ADD_EXPENSE
+const addExpense = () => ({
+    type: 'ADD_EXPENSE',
+    expense: {
+        
+    }
+})
+
 // REMOVE_EXPENSE
 // EDIT_EXPENSE
 // SET_TEXT_FILTER
@@ -29,7 +36,7 @@ const filtersReducer = (state = filtersReducersDefaultState, action) => {
         default: 
             return state;
     }
-}
+};
 
 // Store Creation using combineReducers
 const store = createStore(
