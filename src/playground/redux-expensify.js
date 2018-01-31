@@ -95,3 +95,15 @@ const demoState = {
         endDate: undefined
     }
 };
+
+
+
+const user = {
+    name: 'Jen',
+    age: 25
+};
+
+// spread operator for objects (customize Babel configuration)
+console.log({
+    ...user,
+})
