@@ -106,4 +106,5 @@ const user = {
 // spread operator for objects (customize Babel configuration)
 console.log({
     ...user,
+    location: 'Milwaukee'
 })
