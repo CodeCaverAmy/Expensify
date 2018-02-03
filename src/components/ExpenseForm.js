@@ -33,20 +33,45 @@ export default class ExpenseForm extends React.Component{
         const amount = e.target.value;
         // validate the amount .. 1) must be a number 2) can only have 2 decimals
         // using REGEX ... ^\d*(\.\d{0,2})?$ -- stars with a digit, followed by unlimited digits, optinal . followed by 0-2 digits, no more ($)
-        if (amount.match(/^\d*(\.\d{0,2})?$/)) {
+        // we need to test for 'no amount' (!amount) to allow the user to clear the dat
+        if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
             this.setState(() => ({ amount }))
         }
     };
     onDateChange = (createdAt) => {
-        this.setState(() => ({ createdAt }));
-    }
+        // check to see if there was a value, else do nothing, preventing the user from clearing the data value
+        if (createdAt) {
+            this.setState(() => ({ createdAt }));
+        }
+    };
     onFocusChange = ({ focused }) => {
-        this.setState(() => ({ calendarFocused: focused }))
-    }
+        this.setState(() => ({ calendarFocused: focused }));
+    };
+
+    onSubmit = (e) => {
+        e.preventDefault(); // to avoid a full page refresh
+        // check to see if description and amount has been submitted, if not -> throw an error
+        if(!this.state.description || !this.state.amount) {
+            // set error state = 'Please provide description and amount'
+            this.setState(() => ({ error: 'Please provide description and amount.' }));
+        } else {
+            // clear the error
+            this.setState(() => ({ error: '' }));
+            // submit with the expense that was passed down from its parent
+            this.props.onSubmit({
+                description: this.state.description,
+                amount: parseFloat(this.state.amount, 10) * 100, // convert string to a number and conert $ to cents
+                createdAt: this.state.createdAt.valueOf(), // convert (with the help of moment) to convert to a number
+                note: this.state.note
+            });
+        }
+    };
+
     render() {
         return (
             <div>
-                <form>
+                { this.state.error && <p>{this.state.error}</p> }
+                <form onSubmit={this.onSubmit}>
                     <input 
                         type='text' 
                         placeholder='Description'
