@@ -8,10 +8,10 @@ import 'react-dates/lib/css/_datepicker.css';
 const now = moment();
 console.log(now.format('MMMM Do, YYYY'));
 
-export default class ExpenseForm extends React.Component{
+export default class ExpenseForm extends React.Component {
+    // use the constructor to grab values (if they exist) and set defaults if they do not
     constructor(props) {
         super(props);
-
         this.state = {
             description: props.expense ? props.expense.description : '',
             note: props.expense ? props.expense.note : '',
@@ -100,7 +100,7 @@ export default class ExpenseForm extends React.Component{
                     >
                     </textarea>
                     <button>
-                        Add Expense
+                        {this.props.expense ? 'Edit' : 'Add'} Expense
                     </button>
                 </form>
             </div>
