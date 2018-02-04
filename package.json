@@ -46,10 +46,7 @@
     "start": "node server/server.js",
     "heroku-postbuild": "yarn run build:prod"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CodeCaverAmy/IndecisionApp.git"
-  },
+  "repository": "git+https://github.com/CodeCaverAmy/IndecisionApp.git",
   "bugs": {
     "url": "https://github.com/CodeCaverAmy/IndecisionApp/issues"
   },
