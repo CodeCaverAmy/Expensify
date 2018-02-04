@@ -34,10 +34,7 @@
     "webpack": "^3.10.0"
   },
   "devDependencies": {
-    "enzyme": "2.9.2",
-    "enzyme-to-json": "1.5.1",
     "jest": "^22.1.4",
-    "react-test-render": "15.6.1",
     "webpack-dev-server": "^2.11.1"
   },
   "scripts": {
