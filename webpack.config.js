@@ -24,8 +24,18 @@ module.exports = (env) => {
                 test: /\.s?css$/, // support scss and css files
                 use: CSSExtract.extract({
                     use: [
-                        'css-loader',
-                        'sass-loader'
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        }
                     ]
                 })
             }]
@@ -33,8 +43,8 @@ module.exports = (env) => {
         plugins: [
             CSSExtract
         ],
-        // source map for WebPack to help with debugging (if build is for development and not production)
-        devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
+        // source map for WebPack to help with debugging (source-map depends on development or production)
+        devtool: isProduction ? 'source-map' : 'inline-source-map',
         devServer: {
             contentBase: path.join(__dirname, 'public'),
             historyApiFallback: true //tell dev server that we will handle routing on client-sidte
