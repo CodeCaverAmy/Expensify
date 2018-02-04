@@ -38,7 +38,7 @@
   "scripts": {
     "serve": "live-server public/",
     "build:dev": "webpack",
-    "build:prod": "webpack -p",
+    "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
     "test": "jest"
   },
