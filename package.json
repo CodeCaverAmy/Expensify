@@ -13,7 +13,6 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.9",
-    "jest": "^22.1.4",
     "jshint": "^2.9.5",
     "live-server": "^1.2.0",
     "moment": "^2.20.1",
@@ -39,7 +38,7 @@
     "serve": "live-server public/",
     "build": "webpack",
     "dev-server": "webpack-dev-server",
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
