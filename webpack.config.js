@@ -1,8 +1,11 @@
 const path = require('path'); // built in node function
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = (env) => {
     // test to see if the build is for production
     const isProduction = env === 'production';
+    const CSSExtract = new ExtractTextPlugin('styles.css');
+
     console.log('env', env);
     return {
         entry: './src/app.js', // tell webpack where to start
@@ -19,13 +22,17 @@ module.exports = (env) => {
             },
             {
                 test: /\.s?css$/, // support scss and css files
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ]
+                use: CSSExtract.extract({
+                    use: [
+                        'css-loader',
+                        'sass-loader'
+                    ]
+                })
             }]
         },
+        plugins: [
+            CSSExtract
+        ],
         // source map for WebPack to help with debugging (if build is for development and not production)
         devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
         devServer: {
