@@ -10,7 +10,7 @@ module.exports = (env) => {
     return {
         entry: './src/app.js', // tell webpack where to start
         output: {
-            path: path.join(__dirname, 'public'), // absolute path on machine to where it lives
+            path: path.join(__dirname, 'public', 'dist'), // absolute path on machine to where it lives
             filename: 'bundle.js'
         },
         module: {
@@ -47,7 +47,8 @@ module.exports = (env) => {
         devtool: isProduction ? 'source-map' : 'inline-source-map',
         devServer: {
             contentBase: path.join(__dirname, 'public'),
-            historyApiFallback: true //tell dev server that we will handle routing on client-sidte
+            historyApiFallback: true, //tell dev server that we will handle routing on client-side
+            publicPath: '/dist/'
         }
     };
 };
