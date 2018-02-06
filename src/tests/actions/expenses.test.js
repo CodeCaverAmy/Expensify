@@ -1,5 +1,6 @@
 // Jest test files are run through Babel
 import { addExpense, editExpense, removeExpense } from '../../actions/expenses';
+import expenses from '../fixtures/expenses';
 
 // call test
 test('should setup remove expense action object', () => {
@@ -22,33 +23,33 @@ test('should setup edit expenxe action objet', () => {
 });
 
 test('should setup add expense action object with provided values', () => {
-    const expenseData = {
-        description: 'Car Payment',
-        amount: 39500,
-        createdAt: 1000,
-        note: 'January Car Payment'
-    };
-    const action = addExpense(expenseData);
+    const action = addExpense(expenses[2]);
     expect(action).toEqual({
         type: 'ADD_EXPENSE',
-        expense: {
-            ...expenseData,
-            id: expect.any(String)
-        }
+        expense: expenses[2]
     });
 });
 
-test('should setup add expense action object with default values', () => {
-    const expenseData = {};
-    const action = addExpense(expenseData);
-    expect(action).toEqual({
-        type: 'ADD_EXPENSE',
-        expense: {
-            id: expect.any(String),
-            description: '',
-            note: '',
-            amount: 0,
-            createdAt: 0
-        }
-    });
+test('should add expense to database and store', () => {
+    // create a mock store
+    
 });
+
+test('should add expense with defaults to database and store', () => {
+
+});
+
+// test('should setup add expense action object with default values', () => {
+//     const expenseData = {};
+//     const action = addExpense(expenseData);
+//     expect(action).toEqual({
+//         type: 'ADD_EXPENSE',
+//         expense: {
+//             id: expect.any(String),
+//             description: '',
+//             note: '',
+//             amount: 0,
+//             createdAt: 0
+//         }
+//     });
+// });
