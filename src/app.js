@@ -12,6 +12,8 @@ import './styles/styles.scss';
 import AddExpensePage from './components/AddExpensePage';
 import { setTimeout } from 'timers';
 
+import './firebase/firebase';
+
 const store = configureStore();
 
 
