@@ -17,6 +17,61 @@ firebase.initializeApp(config);
 
 const database = firebase.database();
 
+// setup expenses with three items (description, note, amount, createdAt)
+database.ref('expenses').push({
+    description: 'Rent',
+    note: '',
+    amount: 90000,
+    createdAt: 987634
+});
+
+database.ref('expenses').push({
+    description: 'Phone',
+    note: '',
+    amount: 15000,
+    createdAt: 36254
+});
+
+database.ref('expenses').push({
+    description: 'Credit Card',
+    note: '',
+    amount: 12500,
+    createdAt: 333218
+});
+
+// database.ref('notes/-L4gNFereRM3j_Zsj8Ld').remove();
+
+// database.ref('notes').push({
+//     title: 'To Do',
+//     body: 'Go for a run'
+// });
+
+// const firebaseNotes = {
+//     notes: {
+//         12: {
+//             title: 'First Note',
+//             body: 'This is my note'
+//         }, 
+//         17:
+//         {
+//             title: 'Secon note',
+//             body: 'This is my second note'
+//         }
+//     }
+// };
+
+// const notes = [{
+//     id: '12',
+//     title : 'First note!',
+//     body: 'This is my note'
+// }, {
+//     id: '17',
+//     title : 'Second note!',
+//     body: 'This is my second note'
+// }];
+
+// database.ref('notes').set(notes);
+
 // ---- Fetching the Data ----
 // *** once ***
 // database.ref()                          // if ref() argument is emtpy, returns the entire root dabasee .. ref('location') would return just the location data
@@ -35,12 +90,12 @@ const database = firebase.database();
 //     console.log('Error getting the data', e);
 // });
 
-const onValueChange = database.ref().on('value', (snapshot) => {  // .on retrieves the data whenever the data changes, .on() takes two arguments .. value back and a callback fundtion 
-    const val = snapshot.val();
-    console.log(`${val.name} is a ${val.job.title} at ${val.job.company}`);
-}, (e) => {
-    console.log('Error getting the data', e);
-});
+// const onValueChange = database.ref().on('value', (snapshot) => {  // .on retrieves the data whenever the data changes, .on() takes two arguments .. value back and a callback fundtion 
+//     const val = snapshot.val();
+//     console.log(`${val.name} is a ${val.job.title} at ${val.job.company}`);
+// }, (e) => {
+//     console.log('Error getting the data', e);
+// });
 
 // database.ref().set({            // set returns a promise
 //     name: 'Amy Plant',
@@ -62,21 +117,21 @@ const onValueChange = database.ref().on('value', (snapshot) => {  // .on retriev
 // });
 
 // updates - add / update / delete
-database.ref().update({
-    name: 'MJ Brummitt',    // update
-    age: 62,                // update
-    isSingle: null,         // delete
-    'job/title': 'English Teacher', // add
-    // location: {     
-    //     city: 'Mexico City' // only updates at root level, so this will overwite entire location object
-    // }
-    'location/city': 'Mexico City' // this will 'fix' to only modify the city without touching other child objects (location/city are in single quotes due to the / breaking JS)
-});
+// database.ref().update({
+//     name: 'MJ Brummitt',    // update
+//     age: 62,                // update
+//     isSingle: null,         // delete
+//     'job/title': 'English Teacher', // add
+//     // location: {     
+//     //     city: 'Mexico City' // only updates at root level, so this will overwite entire location object
+//     // }
+//     'location/city': 'Mexico City' // this will 'fix' to only modify the city without touching other child objects (location/city are in single quotes due to the / breaking JS)
+// });
 
-database.ref().update({
-    'job/company': 'Code Cave Camp', 
-    stressLevel: 3
-})
+// database.ref().update({
+//     'job/company': 'Code Cave Camp', 
+//     stressLevel: 3
+// })
 
 // removing some part of the database
 
