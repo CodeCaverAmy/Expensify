@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
     return {
         expenses: SelectExpenses(state.expenses, state.filters)
     };
-}
+};
 
 // create  new const for the HOC
 export default connect(mapStateToProps)(ExpenseList); // connect gives something back - a function 

@@ -24,4 +24,4 @@ test('', () => {
 test('should correctly find the total of expenses', () => {
     const totalExpenses = getTotalExpense(expenses);
     expect(totalExpenses).toBe(parseFloat(expenses[0].amount) + parseFloat(expenses[1].amount) + parseFloat(expenses[2].amount));
-})
+});
