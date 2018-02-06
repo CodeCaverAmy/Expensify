@@ -17,31 +17,56 @@ firebase.initializeApp(config);
 
 const database = firebase.database();
 
-database.ref().set({            // set returns a promise
-    name: 'Amy Plant',
-    age: 50,
-    job: {
-        title: 'Software Developer',
-        company: 'AB Data'
-    },
-    stressLevel: 9,
-    location: {
-        city: 'Milwaukee',
-        state: 'Wisconsin', 
-        zip: 53211
-    }
-}).then(() => {
-    console.log('data is saved');
-}).catch((error) => {
-    console.log('oops, looks like something went wrong', error);
+// ---- Fetching the Data ----
+// *** once ***
+// database.ref()                          // if ref() argument is emtpy, returns the entire root dabasee .. ref('location') would return just the location data
+//     .once('value')                      //returns a promise
+//     .then((snapshot) => {               // snapshot gives us access to our data
+//         const val = snapshot.val();     // .val() returns the data requested
+//         console.log(val);
+//     }).catch((e) => {
+
+//     });
+
+// *** on *** 
+// const onValueChange = database.ref().on('value', (snapshot) => {  // .on retrieves the data whenever the data changes, .on() takes two arguments .. value back and a callback fundtion 
+//     console.log(snapshot.val());
+// }, (e) => {
+//     console.log('Error getting the data', e);
+// });
+
+const onValueChange = database.ref().on('value', (snapshot) => {  // .on retrieves the data whenever the data changes, .on() takes two arguments .. value back and a callback fundtion 
+    const val = snapshot.val();
+    console.log(`${val.name} is a ${val.job.title} at ${val.job.company}`);
+}, (e) => {
+    console.log('Error getting the data', e);
 });
+
+// database.ref().set({            // set returns a promise
+//     name: 'Amy Plant',
+//     age: 50,
+//     job: {
+//         title: 'Software Developer',
+//         company: 'AB Data'
+//     },
+//     stressLevel: 9,
+//     location: {
+//         city: 'Milwaukee',
+//         state: 'Wisconsin', 
+//         zip: 53211
+//     }
+// }).then(() => {
+//     console.log('data is saved');
+// }).catch((error) => {
+//     console.log('oops, looks like something went wrong', error);
+// });
 
 // updates - add / update / delete
 database.ref().update({
     name: 'MJ Brummitt',    // update
     age: 62,                // update
     isSingle: null,         // delete
-    job: 'English Teacher', // add
+    'job/title': 'English Teacher', // add
     // location: {     
     //     city: 'Mexico City' // only updates at root level, so this will overwite entire location object
     // }
