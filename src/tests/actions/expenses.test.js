@@ -1,6 +1,10 @@
 // Jest test files are run through Babel
 import { addExpense, editExpense, removeExpense } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk'; // to allow us to use middleware
+
+const createMockStore = configureMockStore([thunk]);
 
 // call test
 test('should setup remove expense action object', () => {
@@ -32,7 +36,7 @@ test('should setup add expense action object with provided values', () => {
 
 test('should add expense to database and store', () => {
     // create a mock store
-    
+    const store = createMockStore({});
 });
 
 test('should add expense with defaults to database and store', () => {
