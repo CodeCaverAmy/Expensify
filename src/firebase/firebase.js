@@ -15,6 +15,26 @@ const config = {
 // make a connection to the database
 firebase.initializeApp(config);
 
-firebase.database().ref().set({
-    name: 'Amy Plant'
+const database = firebase.database();
+
+database.ref().set({
+    name: 'Amy Plant',
+    age: 50,
+    isSingle: false,
+    location: {
+        city: 'Milwaukee',
+        state: 'Wisconsin', 
+        zip: 53211
+    }
+});
+
+// database.ref().set('My Data');
+
+database.ref('age').set(51);
+
+database.ref('location/city').set('Minneapolis');
+
+database.ref('/attributes').set({
+    height: 66,
+    weight: 130
 });
