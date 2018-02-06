@@ -1,18 +1,5 @@
 import uuid from 'uuid'; // create universail identifiers
 
-// component calls action generator
-// action generator returns an object
-// component dispatches object
-// redux store change
-
-// --- changes to --- //
-
-// component calls action generator
-// action generator does not return an object, it returns a function
-// component dispatches a function (middlewhare) and not an object
-// function funs (has the ability to dispatch other actions and do whatever it wants)
-
-
 // ADD_EXPENSE
 // ( {} = {} ) 'destructure the values  {} setting its defaults, and if it doesn't exist, pass in an empthy object {}
 export const addExpense = ( 
