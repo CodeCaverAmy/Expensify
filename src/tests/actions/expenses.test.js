@@ -1,5 +1,5 @@
 // Jest test files are run through Babel
-import { addExpense, editExpense, removeExpense } from '../../actions/expenses';
+import { startAddExpense, editExpense, removeExpense } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk'; // to allow us to use middleware
@@ -34,9 +34,20 @@ test('should setup add expense action object with provided values', () => {
     });
 });
 
-test('should add expense to database and store', () => {
+test('should add expense to database and store', (done) => {        // jest needs 'done' passed in since the store.dispatchEvent is asynchronous and needs to know whe its completed
     // create a mock store
     const store = createMockStore({});
+    const expenseData = {
+        description: 'Mouse',
+        amount: 3000,
+        note: 'This is the best one.',
+        createdAt: 1000
+    };
+    
+    store.dispatchEvent(startAddExpense(expenseData)).then(() => {
+        // assertions
+        done(); // this sends the done method once the test has been completed
+    }); 
 });
 
 test('should add expense with defaults to database and store', () => {

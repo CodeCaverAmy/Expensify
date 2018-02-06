@@ -16,9 +16,11 @@ export const startAddExpense = (expenseData = {}) => {
             amount = 0, 
             createdAt = 0
         } = expenseData;
-        const expense = { description, note, amount, createdAt }
+
+        const expense = { description, note, amount, createdAt };
+        
         // push to firebase
-        database.ref('expenses').push(expense).then((ref) => {
+        return database.ref('expenses').push(expense).then((ref) => {
             // dispatch, otherwise the Redux store is never going to change
             dispatch(addExpense({
                 id: ref.key,
