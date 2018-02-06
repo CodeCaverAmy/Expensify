@@ -1,8 +1,9 @@
 // Jest test files are run through Babel
-import { startAddExpense, editExpense, removeExpense } from '../../actions/expenses';
+import { startAddExpense, addExpense, editExpense, removeExpense } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk'; // to allow us to use middleware
+import database from '../../firebase/firebase';
 
 const createMockStore = configureMockStore([thunk]);
 
@@ -44,13 +45,48 @@ test('should add expense to database and store', (done) => {        // jest need
         createdAt: 1000
     };
     
-    store.dispatchEvent(startAddExpense(expenseData)).then(() => {
-        // assertions
+    store.dispatch(startAddExpense(expenseData)).then(() => {
+        const actions = store.getActions(); // from redux-mock-store, returning an array of all of the actions
+        expect(actions[0]).toEqual({
+            type: 'ADD_EXPENSE',
+            expense: {
+                id: expect.any(String),
+                ...expenseData
+            }
+        });
+
+        return database.ref(`expenses/${actions[0].expense.id}`).once('value');  // return this to use with the next chaned .then
+    }).then((snapshot) => {
+        expect(snapshot.val()).toEqual(expenseData);
         done(); // this sends the done method once the test has been completed
     }); 
 });
 
-test('should add expense with defaults to database and store', () => {
+test('should add expense with defaults to database and store', (done) => {
+    // create a mock store
+    const store = createMockStore({});
+    const expenseDefaults = {
+        description: '',
+        amount: 0,
+        note: '',
+        createdAt: 0
+    };
+    
+    store.dispatch(startAddExpense({})).then(() => {
+        const actions = store.getActions(); // from redux-mock-store, returning an array of all of the actions
+        expect(actions[0]).toEqual({
+            type: 'ADD_EXPENSE',
+            expense: {
+                id: expect.any(String),
+                ...expenseDefaults
+            }
+        });
+
+        return database.ref(`expenses/${actions[0].expense.id}`).once('value');  // return this to use with the next chaned .then
+    }).then((snapshot) => {
+        expect(snapshot.val()).toEqual(expenseDefaults);
+        done(); // this sends the done method once the test has been completed
+    }); 
 
 });
 
