@@ -32,19 +32,27 @@ database.ref().set({            // set returns a promise
     console.log('oops, looks like something went wrong', error);
 });
 
-// database.ref().set('My Data');
+// removing some part of the database
 
-// database.ref('age').set(51);
+// wipe isSingle from the database
+// database.ref('isSingle')
+//     .remove()
+//     .then(() => {
+//         console.log('removed successfully');
+//     })
+//     .catch((e) => {
+//     console.log('oops, I was not able to remove that');
+// });
 
-// database.ref('location/city').set('Minneapolis');
+// remove the ENTIRE database
+// database.ref()
+//     .remove()
+//     .then(() => {
+//         console.log('removed successfully');
+//     })
+//     .catch((e) => {
+//     console.log('oops, I was not able to remove that');
+// });
 
-database.ref('/attributes').set({
-    height: 66,
-    weight: 130
-}).then(() => {
-    console.log('attributes successfully changed');
-}).catch((e) => {
-    console.log('wow, something really bad happened, like this ... ', e)
-});
-
-// console.log('I made a request to change the data.');
+// remove with SET
+// database.ref('isSingle').set(null); 
