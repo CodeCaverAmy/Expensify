@@ -17,27 +17,57 @@ firebase.initializeApp(config);
 
 const database = firebase.database();
 
+// child_removed (triggered when a child of expenses is removed)
+database.ref('expenses').on('child_removed', (snapshot) => {
+    console.log(snapshot.key, snapshot.val());
+});
+
+// child_changed (triggered when a child of expenses is changed)
+database.ref('expenses').on('child_changed', (snapshot) => {
+    console.log(snapshot.key, snapshot.val());
+});
+
+// child_added (triggered when a child is added) -- triggers one time for all of the data, and then rerun for all added children
+database.ref('expenses').on('child_added', (snapshot) => {
+    console.log(snapshot.key, snapshot.val());
+});
+
+// database.ref('expenses')
+//     .once('value')
+//     .then((snapshot) => {
+//         const expenses = [];
+
+//         snapshot.forEach((childSnapshot) => {
+//             expenses.push({
+//                 id: childSnapshot.key,
+//                 ...childSnapshot.val()
+//             });
+//         });
+
+//         console.log(expenses);
+//     });
+
+// database.ref('expenses').on('value', (snapshot) => {
+//     const expenses = [];
+
+//     snapshot.forEach((childSnapshot) => {
+//         expenses.push({
+//             id: childSnapshot.key,
+//             ...childSnapshot.val()
+//         });
+//     });
+
+//     console.log(expenses);
+// });
+
+
 // setup expenses with three items (description, note, amount, createdAt)
-database.ref('expenses').push({
-    description: 'Rent',
-    note: '',
-    amount: 90000,
-    createdAt: 987634
-});
-
-database.ref('expenses').push({
-    description: 'Phone',
-    note: '',
-    amount: 15000,
-    createdAt: 36254
-});
-
-database.ref('expenses').push({
-    description: 'Credit Card',
-    note: '',
-    amount: 12500,
-    createdAt: 333218
-});
+// database.ref('expenses').push({
+//     description: 'Rent',
+//     note: '',
+//     amount: 90000,
+//     createdAt: 987634
+// });
 
 // database.ref('notes/-L4gNFereRM3j_Zsj8Ld').remove();
 
