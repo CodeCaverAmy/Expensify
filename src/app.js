@@ -9,6 +9,7 @@ import getVisibleExpenses from './selectors/expenses';
 
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
+import 'react-dates/lib/css/_datepicker.css';
 import AddExpensePage from './components/AddExpensePage';
 import { setTimeout } from 'timers';
 
