@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux'; // we want to connect this component to the redux store
 import ExpenseForm from './ExpenseForm'; // we need the expense form so that we can use it in our component
-import { editExpense, startRemoveExpense } from '../actions/expenses';
+import { startEditExpense, startRemoveExpense } from '../actions/expenses';
 
 export class EditExpensePage extends React.Component {
     onSubmit = (expense) => {
-        this.props.editExpense(this.props.expense.id, expense);
+        this.props.startEditExpense(this.props.expense.id, expense);
         this.props.history.push('/');
     };
     onRemove = () => {
@@ -34,7 +34,7 @@ const mapToStateProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
-    editExpense: (id, expense) => dispatch(editExpense(id, expense)),
+    startEditExpense: (id, expense) => dispatch(startEditExpense(id, expense)),
     startRemoveExpense: (data) => dispatch(startRemoveExpense(data))
 });
 

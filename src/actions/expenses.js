@@ -42,8 +42,7 @@ export const removeExpense = ( { id } = {} ) => ({
 
 // remove from Firebase
 export const startRemoveExpense = ( { id } = {} ) => {
-    console.log({ id });
-    return (dispatch) => {  // dispatch which gets passed to this funciton from the Redux library
+    return (dispatch) => {  // dispatch which gets passed to this function from the Redux library
         return database.ref(`expenses/${id}`).remove().then(() => {
             // once it is removed, dispatch remove from above
             dispatch(removeExpense({ id }));
@@ -58,6 +57,17 @@ export const editExpense = (id, updates) => ({
     id,
     updates
 });
+
+// edit expense in Firebase
+export const startEditExpense = (id, updates) => {
+    return (dispatch) => {
+        // update the expense in database with the given id and updates submitted
+        return database.ref(`expenses/${id}`).update(updates).then(() => {
+            // when the updates are successully synched, dispatch editExpense to change Redux
+            dispatch(editExpense(id, updates));
+        });
+    };
+};
 
 // SET_EXPENSES
 export const setExpenses = (expenses) => ({
