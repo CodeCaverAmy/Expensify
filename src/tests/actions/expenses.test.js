@@ -1,5 +1,13 @@
 // Jest test files are run through Babel
-import { startAddExpense, addExpense, editExpense, removeExpense, setExpenses, startSetExpenses } from '../../actions/expenses';
+import { 
+    startAddExpense, 
+    addExpense, 
+    editExpense, 
+    removeExpense, 
+    startRemoveExpense,
+    setExpenses, 
+    startSetExpenses 
+} from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk'; // to allow us to use middleware
@@ -16,7 +24,7 @@ beforeEach((done) => {
     database.ref('expenses').set(expensesData).then(() => done());
 });
 
-// call test
+// remove expense from Redux
 test('should setup remove expense action object', () => {
     const action = removeExpense({ id: '123abc' });
     expect(action).toEqual({
@@ -25,7 +33,27 @@ test('should setup remove expense action object', () => {
     });
 });
 
-test('should setup edit expenxe action objet', () => {
+// remove epxense from Firebse
+test('should remove the expense from firebase', (done) => {
+    const store = createMockStore({});
+    const id=expenses[2].id;
+    store.dispatch(startRemoveExpense({ id })).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'REMOVE_EXPENSE', 
+            id
+        });
+        // try to grab the expense that was removed
+        return database.ref(`expenss/${id}`).once('value'); 
+    }).then((snapshot) => {
+        // if the expense was removed, it should not exist and the val will be undefined, which is falsy
+        expect(snapshot.val()).toBeFalsy();
+        // send back done to say this has run
+        done();
+    });
+});
+
+test('should setup edit expense action objet', () => {
     const action = editExpense('34', { description: 'new description' });
     expect(action).toEqual({
         type: 'EDIT_EXPENSE',
@@ -107,7 +135,7 @@ test('should setup set expense action object with data', () => {
     });
 });
 
-test('should fetch the expenses from fiebase', (done) => {
+test('should fetch the expenses from firebase', (done) => {
     // don't run until done comes back to say that the data has been fetched from the store
     const store = createMockStore({});
     store.dispatch(startSetExpenses()).then(() => {
@@ -120,3 +148,4 @@ test('should fetch the expenses from fiebase', (done) => {
         done();
     });
 });
+

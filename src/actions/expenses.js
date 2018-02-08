@@ -3,11 +3,13 @@ import database from '../firebase/firebase';
 import expenses from '../tests/fixtures/expenses';
 
 // ADD_EXPENSE
+// add expense to the Redux store
 export const addExpense = (expense) => ({
     type: 'ADD_EXPENSE',
     expense
 });
 
+// add expense to Firebase
 export const startAddExpense = (expenseData = {}) => {
     // return the thing that gets dispatched (a function)
     return (dispatch) => {
@@ -32,10 +34,22 @@ export const startAddExpense = (expenseData = {}) => {
 };
 
 // REMOVE_EXPENSE
+// remove from Redux Store
 export const removeExpense = ( { id } = {} ) => ({
     type: 'REMOVE_EXPENSE',
     id
 });
+
+// remove from Firebase
+export const startRemoveExpense = ( { id } = {} ) => {
+    console.log({ id });
+    return (dispatch) => {  // dispatch which gets passed to this funciton from the Redux library
+        return database.ref(`expenses/${id}`).remove().then(() => {
+            // once it is removed, dispatch remove from above
+            dispatch(removeExpense({ id }));
+        });
+    };
+};
 
 // EDIT_EXPENSE
 // needs two arguments: id and updates
