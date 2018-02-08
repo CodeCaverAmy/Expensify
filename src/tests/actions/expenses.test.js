@@ -99,10 +99,24 @@ test('should add expense with defaults to database and store', (done) => {
 
 });
 
-test('should setup set expense action objece with data', () => {
+test('should setup set expense action object with data', () => {
     const action = setExpenses(expenses);
     expect(action).toEqual({
         type: 'SET_EXPENSES',
         expenses
+    });
+});
+
+test('should fetch the expenses from fiebase', (done) => {
+    // don't run until done comes back to say that the data has been fetched from the store
+    const store = createMockStore({});
+    store.dispatch(startSetExpenses()).then(() => {
+        // wait for data to come back
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'SET_EXPENSES',
+            expenses
+        });
+        done();
     });
 });

@@ -1,5 +1,6 @@
 import uuid from 'uuid'; // create universail identifiers
 import database from '../firebase/firebase';
+import expenses from '../tests/fixtures/expenses';
 
 // ADD_EXPENSE
 export const addExpense = (expense) => ({
@@ -50,4 +51,23 @@ export const setExpenses = (expenses) => ({
     expenses
 });
 
-// export const startSetExpenses; // asynchronous action
+export const startSetExpenses = () => { // asynchronous action
+    // fetch all expense data once
+    return (dispatch) => {
+        // return makes sure the promise gets returned, allowing us to have access to .then when we actuall dispatch in app.js
+        return database.ref('expenses').once('value').then((snapshot) => {
+            // parse that snapshot data into an array
+            const expense=[]; // intialize an empty array
+
+            snapshot.forEach((childSnapshot) => {
+                expenses.push({  // push all of the expenses onto the array
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                });
+            });
+
+            // dispatch SET_EXPENSES
+            dispatch(setExpenses(expenses));
+        });
+    };
+};
