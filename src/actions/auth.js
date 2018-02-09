@@ -8,3 +8,10 @@ export const startLogin = () => {
         return firebase.auth().signInWithPopup(googleAuthProvider);
     };
 };
+
+export const startLogout = () => {
+    return () => {
+        // call the firebase method to sign out
+        return firebase.auth().signOut();
+    };
+};

@@ -2,19 +2,8 @@
 
 exports[`should render Login Page correctly 1`] = `
 <div>
-  <form>
-    <input
-      autoFocus={true}
-      placeholder="username"
-      type="text"
-    />
-    <input
-      placeholder="password"
-      type="password"
-    />
-    <button>
-      Login
-    </button>
-  </form>
+  <button>
+    Login
+  </button>
 </div>
 `;
