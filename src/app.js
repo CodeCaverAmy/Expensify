@@ -30,8 +30,10 @@ store.dispatch(startSetExpenses()).then(() => {
 firebase.auth().onAuthStateChanged((user) => {
     // runs when the user changes their authentication
     if(user) {
+        // redirect to the login page
         console.log('log in');
     } else {
+        // redirect to the home page
         console.log('log out');
     }
 });
