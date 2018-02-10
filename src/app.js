@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'; // allow us to provide the store to all 
 import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { startSetExpenses } from './actions/expenses';
-import { setTextFilter } from './actions/filters';
+import { login, logout } from './actions/auth';
 import getVisibleExpenses from './selectors/expenses';
 
 import 'normalize.css/normalize.css';
@@ -34,6 +34,7 @@ firebase.auth().onAuthStateChanged((user) => {
     // runs when the user changes their authentication
     if(user) {
         // dispatch expenses only if the user has successfully logged in
+        store.dispatch(login(user.uid));
         store.dispatch(startSetExpenses()).then(() => {
             renderApp();
             if (history.location.pathname === '/') {
@@ -42,6 +43,7 @@ firebase.auth().onAuthStateChanged((user) => {
             }
         });
     } else {
+        store.dispatch(logout());
         renderApp();
         history.push('/'); // redirect to the home page
     }

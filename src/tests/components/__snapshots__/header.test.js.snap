@@ -20,13 +20,6 @@ exports[`should render Header correctly 1`] = `
   >
     Dashboard
   </NavLink>
-  <NavLink
-    activeClassName="is-active"
-    ariaCurrent="true"
-    to="/login"
-  >
-    Login
-  </NavLink>
   <button
     onClick={[Function]}
   >
