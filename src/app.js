@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'; // allow us to provide the store to all of the components that make up our application
-import AppRouter from './routers/AppRouter';
+import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { startSetExpenses } from './actions/expenses';
 import { setTextFilter } from './actions/filters';
@@ -14,6 +14,13 @@ import 'react-dates/lib/css/_datepicker.css';
 import { firebase } from './firebase/firebase';
 
 const store = configureStore();
+let hasRendered = false;
+const renderApp = () => {   // render the app only if it has not been rendered yet
+    if(!hasRendered) {
+        ReactDOM.render(jsx , document.getElementById('app'));
+        hasRendered = true;
+    }
+};
 
 const jsx = (
     <Provider store={store}>
@@ -23,17 +30,19 @@ const jsx = (
 
 ReactDOM.render(<p>Loading ...</p> , document.getElementById('app'));
 
-store.dispatch(startSetExpenses()).then(() => {
-    ReactDOM.render(jsx , document.getElementById('app'));
-});
-
 firebase.auth().onAuthStateChanged((user) => {
     // runs when the user changes their authentication
     if(user) {
-        // redirect to the login page
-        console.log('log in');
+        // dispatch expenses only if the user has successfully logged in
+        store.dispatch(startSetExpenses()).then(() => {
+            renderApp();
+            if (history.location.pathname === '/') {
+                // redirect to the dashboard page on a successful login
+                history.push('/dashboard');
+            }
+        });
     } else {
-        // redirect to the home page
-        console.log('log out');
+        renderApp();
+        history.push('/'); // redirect to the home page
     }
 });
