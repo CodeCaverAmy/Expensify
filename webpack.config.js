@@ -16,7 +16,7 @@ module.exports = (env) => {
 
     console.log('env', env);
     return {
-        entry: './src/app.js', // tell webpack where to start
+        entry: ['babel-polyfill', './src/app.js'], // tell webpack where to start
         output: {
             path: path.join(__dirname, 'public', 'dist'), // absolute path on machine to where it lives
             filename: 'bundle.js'
